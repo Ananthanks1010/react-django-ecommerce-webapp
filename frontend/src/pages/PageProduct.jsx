@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 
-export default function ProductPage() {
+export default function PageProduct() {
   const { productId } = useParams(); // Get product ID from URL
   console.log("Received productId:", productId); // Debugging
 
@@ -45,12 +45,12 @@ export default function ProductPage() {
           </div>
   
           {/* Product Info Section - Split Layout */}
-          <div className="flex flex-col md:!flex-row items-start p-3">
+          <div className="flex flex-row p-4">
             {/* Product Details on Left */}
-            <div className="w-full md:w-1/2 items-start pt-4">
-              <h2 className="text-2xl font-semibold text-gray-800">Product : {product?.product_name}</h2>
-              <p className="text-gray-600 mt-2">Description : {product?.product_description}</p>
-              <span className="text-1xl font-bold text-gray-900 mt-4 block">Price :  ${product?.product_price}</span>
+            <div className="w-1/2 p-4">
+              <h2 className="text-2xl font-semibold text-gray-800">{product?.product_name}</h2>
+              <p className="text-gray-600 mt-2">{product?.product_description}</p>
+              <span className="text-3xl font-bold text-gray-900 mt-4 block">${product?.product_price}</span>
               
               {/* Add to Cart Button */}
               <button className="mt-6 bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700">
@@ -59,7 +59,7 @@ export default function ProductPage() {
             </div>
             
             {/* Size Selector on Right */}
-            <div className="w-full md:w-1/2 items-center">
+            <div className="w-1/2 p-4">
               <h3 className="text-sm font-medium text-black">Size</h3>
               <div className="mt-2 flex flex-wrap gap-2">
                 {product?.product_sizes?.map((size, idx) => (

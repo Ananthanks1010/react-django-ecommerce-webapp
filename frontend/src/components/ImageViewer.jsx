@@ -14,6 +14,6 @@ const S3Image = ({ url }) => {
 };
 
 export default function App() {
-  const s3ImageUrl = "https://tobiramasset.s3.us-east-1.amazonaws.com/products/1/image1.png";
+  const s3ImageUrl = "https://tobiramasset.s3.us-east-1.amazonaws.com/products/10/image1.png";
   return <S3Image url={s3ImageUrl} />;
 }
