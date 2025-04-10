@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom"; // <-- Added useNavigate
 import axios from "axios";
 import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
@@ -7,6 +7,7 @@ import { useAuth } from "../components/authcontext";
 
 export default function ProductPage() {
   const { productId } = useParams(); // Get product ID from URL
+  const navigate = useNavigate(); // <-- For navigation
   const { user } = useAuth();
 
   const [product, setProduct] = useState(null);
@@ -107,6 +108,19 @@ export default function ProductPage() {
                   </button>
                 ))}
               </div>
+              {/*3d model navigation here */}
+              <button
+                className="mt-4 bg-black text-white px-4 py-2 rounded hover:bg-gray-800"
+                onClick={() => {
+                  if (user?.user_id) {
+                    navigate(`/view/${productId}`);
+                  } else {
+                    navigate('/login');
+                  }
+                }}
+              >
+                View in 3D
+              </button>
             </div>
           </div>
         </div>

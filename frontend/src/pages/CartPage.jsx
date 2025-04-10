@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Button } from "../components/ui/button";
 import { Card, CardContent } from "../components/ui/card";
 import { Trash2 } from "lucide-react";
@@ -11,6 +11,7 @@ import axios from "axios";
 const CartPage = () => {
   const { user } = useAuth();
   const location = useLocation();
+  const navigate = useNavigate();
   const [cartItems, setCartItems] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -93,6 +94,15 @@ const CartPage = () => {
     0
   );
 
+  const handleCheckout = () => {
+    navigate("/payment", {
+      state: {
+        product_ids: cartItems.map((item) => item.id),
+        user_id: userId,
+      },
+    });
+  };
+
   return (
     <div>
       <NavBar />
@@ -169,7 +179,9 @@ const CartPage = () => {
                   <span>Total</span>
                   <span>${total.toFixed(2)}</span>
                 </div>
-                <Button className="mt-6 w-full">Checkout</Button>
+                <Button className="mt-6 w-full" onClick={handleCheckout}>
+                  Checkout
+                </Button>
               </CardContent>
             </Card>
           </div>

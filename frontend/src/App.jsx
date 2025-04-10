@@ -13,6 +13,9 @@ import ProductList from './pages/ProductList'
 import ImageSearchModal from './components/ImageSearchModal'
 import ModelViewer from './components/ModelView'
 import { AuthProvider } from './components/authcontext'
+import View from './components/View'
+import InteractiveCloth from './components/View'
+import Payment from './components/payment'
 
 const App = () => {
   return (
@@ -30,6 +33,8 @@ const App = () => {
           <Route path='/list' element={<ProductList />} />
           <Route path='/ImageSearch' element={<ImageSearchModal />} />
           <Route path='/model' element={<ModelViewer />} />
+          <Route path="/view/:productId" element={<InteractiveCloth />} />
+          <Route path="/payment" element={<Payment />} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>

@@ -13,7 +13,7 @@ const ProductList = () => {
   useEffect(() => {
     const fetchProductData = async () => {
       if (productIds.length === 0) {
-        navigate("/"); // redirect to homepage if no IDs
+        navigate("/");
         return;
       }
 
@@ -34,41 +34,40 @@ const ProductList = () => {
   }, [productIds, navigate]);
 
   return (
-    <div className="p-6">
-      <h1 className="text-2xl font-bold mb-4">Product List</h1>
+    <div className="px-4 py-8 max-w-screen-xl mx-auto">
+      <h1 className="text-3xl font-bold mb-8 text-center">Product List</h1>
 
       {loading ? (
-        <p className="text-gray-500">Loading...</p>
+        <p className="text-center text-gray-500">Loading...</p>
       ) : products.length === 0 ? (
-        <p className="text-red-600">No products found.</p>
+        <p className="text-center text-red-500">No products found.</p>
       ) : (
-        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <div className="grid flex flex-row md:flex-col gap-6 grid-cols-1 grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
           {products.map((product) => (
             <div
               key={product.product_id}
-              className="border rounded-xl shadow-md p-4 hover:shadow-lg transition bg-white flex flex-row"
+              className="bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-all duration-200 flex flex-row md:flex-col overflow-hidden"
             >
-              {/* Image */}
-              <img
-                src={product.image || "https://via.placeholder.com/150"}
-                alt={product.name}
-                className="w-full h-48 object-contain mb-4 rounded"
-              />
-
-              {/* Info */}
-              <div>
-              <h2 className="text-lg font-semibold mb-1">{product.name || "Unnamed Product"}</h2> <br />
-              <p className="text-gray-700 mb-1">{product.product_description}</p> <br />
-              <p className="text-sm text-gray-500 mb-2">ID: {product.product_id}</p> <br />
+              <div className="h-48 overflow-hidden flex items-center justify-center bg-gray-100">
+                <img
+                  src={product.image || "https://via.placeholder.com/200"}
+                  alt={product.name}
+                  className="h-full w-auto object-contain"
+                />
               </div>
-              <button
-                onClick={() => navigate(`/product/${product.product_id}`)}
-                className="mt-auto px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
-              >
-                View Product
-              </button>
-            </div>
 
+              <div className="p-4 flex flex-col flex-grow">
+                <h2 className="text-lg font-semibold mb-1">{product.name}</h2>
+                <p className="text-sm text-gray-600 mb-2">{product.product_description}</p>
+                <p className="text-xs text-gray-400 mb-4">ID: {product.product_id}</p>
+                <button
+                  onClick={() => navigate(`/product/${product.product_id}`)}
+                  className="mt-auto bg-blue-600 hover:bg-blue-700 text-white text-sm py-2 px-4 rounded"
+                >
+                  View Product
+                </button>
+              </div>
+            </div>
           ))}
         </div>
       )}
