@@ -3,14 +3,17 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
+import { useAuth } from "../components/authcontext";
 
 export default function ProductPage() {
   const { productId } = useParams(); // Get product ID from URL
-  console.log("Received productId:", productId); // Debugging
+  const { user } = useAuth();
 
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [message, setMessage] = useState(null);
+  const [messageType, setMessageType] = useState("success");
 
   useEffect(() => {
     axios
@@ -26,6 +29,29 @@ export default function ProductPage() {
         setLoading(false);
       });
   }, [productId]);
+
+  const handleAddToCart = async () => {
+    if (!user?.user_id) {
+      setMessage("Please log in to add items to cart.");
+      setMessageType("error");
+      return;
+    }
+
+    try {
+      const res = await axios.post("http://127.0.0.1:8000/cart/add/", {
+        user_id: user.user_id,
+        product_id: productId,
+      });
+
+      setMessage(res.data.message || "Product added to cart.");
+      setMessageType("success");
+    } catch (err) {
+      setMessage("Failed to add product to cart.");
+      setMessageType("error");
+    }
+
+    setTimeout(() => setMessage(null), 4000);
+  };
 
   if (loading) return <div className="text-center mt-10">Loading...</div>;
   if (error) return <div className="text-center mt-10 text-red-500">{error}</div>;
@@ -56,9 +82,19 @@ export default function ProductPage() {
               <span className="text-1xl font-bold text-gray-900 mt-4 block">Price :  ${product?.product_price}</span>
               
               {/* Add to Cart Button */}
-              <button className="mt-6 bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700">
+              <button
+                className="mt-6 bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700"
+                onClick={handleAddToCart}
+              >
                 Add to Cart
               </button>
+
+              {/* Message */}
+              {message && (
+                <p className={`mt-2 font-medium ${messageType === "success" ? "text-green-600" : "text-red-600"}`}>
+                  {message}
+                </p>
+              )}
             </div>
             
             {/* Size Selector on Right */}

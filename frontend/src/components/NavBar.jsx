@@ -117,6 +117,26 @@ function NavBar() {
             </div>
           </button>
 
+          {/* 🛒 Cart Icon */}
+<button
+  className="btn btn-primary btn-ghost btn-circle"
+  onClick={() => {
+    if (user) {
+      navigate("/cart", { state: { user_id: user.id || user.email } });
+    } else {
+      navigate("/login", { state: { from: "/cart" } });
+    }
+  }}
+>
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+    viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}
+    className="w-6 h-6 text-white">
+    <path strokeLinecap="round" strokeLinejoin="round"
+      d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13l-1.5 7h13L17 13M7 13l2.293-2.293a1 1 0 011.414 0L13 13" />
+  </svg>
+</button>
+
+
           {/* 🟢 Auth Button */}
           <button
             onClick={handleLoginClick}
