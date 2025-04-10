@@ -15,7 +15,7 @@ import os
 from dotenv import load_dotenv
 from decouple import config
 
-
+load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -45,6 +45,8 @@ INSTALLED_APPS = [
     'Registers',
     'User',
     'Admin',
+    'Auth',
+    'Image_app',
     'rest_framework',
     'corsheaders',
     'upload',
@@ -81,7 +83,15 @@ AWS_S3_OBJECT_PARAMETERS = {
 }
 
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-
+AWS_COGNITO_REGION = os.getenv("AWS_REGION_NAME")
+AWS_COGNITO_USER_POOL_ID = os.getenv("AWS_COGNITO_USER_POOL_ID")
+AWS_COGNITO_CLIENT_ID = os.getenv("AWS_COGNITO_CLIENT_ID")
+AWS_CLIENT_SECRET = os.getenv("AWS_CLIENT_SECRET")
+COGNITO_REDIRECT_URI = os.getenv("COGNITO_REDIRECT_URI")
+COGNITO_CLIENT_ID = os.getenv("AWS_COGNITO_CLIENT_ID")
+COGNITO_DOMAIN = os.getenv("COGNITO_DOMAIN")
+COGNITO_CLIENT_SECRET = os.getenv("AWS_CLIENT_SECRET")
+COGNITO_USER_POOL_ID = os.getenv("AWS_COGNITO_USER_POOL_ID")
 
 TEMPLATES = [
     {

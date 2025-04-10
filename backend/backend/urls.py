@@ -21,4 +21,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('Product/',include('Product.urls')),
     path('upload/',include('upload.urls')),
+    path('imagerecog/',include('Image_app.urls')),
+    path('user/',include('User.urls')),
+    path('Auth/',include('Auth.urls'))
 ]
