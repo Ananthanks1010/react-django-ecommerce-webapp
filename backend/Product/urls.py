@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import ProductListView, FeaturedProductsView, get_product, product_description, get_products_by_ids
+from .views import ProductListView, FeaturedProductsView, get_product, product_description, get_products_by_ids, get_model_url
  # Import the correct view
 
 urlpatterns = [
@@ -7,5 +7,6 @@ urlpatterns = [
     path('featured/', FeaturedProductsView.as_view(), name='featured_product-list'),
     path('product/<str:product_id>/', get_product, name='get_product'),
     path('description/', product_description, name='get_description'),
-     path("get-by-ids", get_products_by_ids, name="get_products_by_ids")
+    path("get-by-ids", get_products_by_ids, name="get_products_by_ids"),
+    path('get-model-url/', get_model_url, name='get_model_url'),
 ]

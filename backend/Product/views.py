@@ -140,3 +140,28 @@ def get_products_by_ids(request):
         return JsonResponse({"error": "Invalid JSON"}, status=400)
     except Exception as e:
         return JsonResponse({"error": str(e)}, status=500)
+        
+
+@csrf_exempt
+def get_model_url(request):
+    if request.method != 'POST':
+        return JsonResponse({'error': 'Only POST method is allowed'}, status=405)
+
+    try:
+        data = json.loads(request.body)
+        product_id = data.get('product_id')
+
+        if not product_id:
+            return JsonResponse({'error': 'Missing product_id'}, status=400)
+
+        product = Product.get(product_id)
+        
+        if not product.model_url:
+            return JsonResponse({'error': 'Model URL not available for this product'}, status=404)
+
+        return JsonResponse({'model_url': product.model_url}, status=200)
+
+    except Product.DoesNotExist:
+        return JsonResponse({'error': 'Product not found'}, status=404)
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=500)
