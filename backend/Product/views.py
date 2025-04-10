@@ -4,6 +4,18 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 from .models import Product
+from fastapi import FastAPI, Query
+from pynamodb.models import Model
+from pynamodb.attributes import UnicodeAttribute
+from typing import List
+import os
+from fuzzywuzzy import fuzz
+from pynamodb.attributes import UnicodeAttribute
+from pynamodb.models import Model
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_POST
+import json
 
 # Create your views here.
 
@@ -59,3 +71,72 @@ def get_product(request, product_id):
         })
     except DoesNotExist:
         return Response({"error": "Product not found"}, status=404)
+
+
+@csrf_exempt  # Disable CSRF for local testing; enable proper auth in production
+@require_POST
+def product_description(request):
+    try:
+        # Parse JSON body
+        data = json.loads(request.body)
+        search_term = data.get('product_description', '').lower()
+
+        if not search_term:
+            return JsonResponse({'error': 'product_description is required'}, status=400)
+
+        # Threshold for fuzzy match (0-100), higher = stricter
+        FUZZY_THRESHOLD = 70
+
+        matching_products = []
+
+        for item in Product.scan():
+            desc = item.product_description
+            if not desc:
+                continue
+
+            score = fuzz.partial_ratio(search_term, desc.lower())
+            if score >= FUZZY_THRESHOLD:
+                matching_products.append(item.product_id)
+
+        return JsonResponse({'product_ids': matching_products})
+
+    except json.JSONDecodeError:
+        return JsonResponse({'error': 'Invalid JSON'}, status=400)
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=500)
+
+@csrf_exempt
+@require_POST
+def get_products_by_ids(request):
+    try:
+        data = json.loads(request.body)
+        product_ids = data.get("product_ids", [])
+
+        if not isinstance(product_ids, list) or not product_ids:
+            return JsonResponse({"error": "product_ids must be a non-empty array"}, status=400)
+
+        products_data = []
+
+        for pid in product_ids:
+            try:
+                product = Product.get(pid)
+                products_data.append({
+                    "product_id": product.product_id,
+                    "name": product.product_name,
+                    "product_description": product.product_description,
+                    "images": product.thumbnail_url or [],
+                    "image" : product.image_url,
+                    "model" : product.model_url,
+                    "price" : product.product_price,
+                    "category" : product.product_category,
+                    "sizes" : product.product_sizes,
+                })
+            except Product.DoesNotExist:
+                continue  # Skip missing products
+
+        return JsonResponse({"products": products_data}, status=200)
+
+    except json.JSONDecodeError:
+        return JsonResponse({"error": "Invalid JSON"}, status=400)
+    except Exception as e:
+        return JsonResponse({"error": str(e)}, status=500)
