@@ -4,7 +4,7 @@ from ultralytics import YOLO
 
 def input_fn(request_body):
     print("Executing input_fn from inference.py ...")
-    model = YOLO("C:/Users/devap/OneDrive/Documents/mini_project/demo_2/backend/Image_app/process/best.pt")
+    model = YOLO('Image_app/process/best.pt')
     jpg_original = base64.b64decode(request_body)
     jpg_as_np = np.frombuffer(jpg_original, dtype=np.uint8)
     img = cv2.imdecode(jpg_as_np, flags=-1)

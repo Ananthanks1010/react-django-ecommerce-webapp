@@ -1,10 +1,16 @@
+import json
 import uuid
 import random
 import time
+from django.http import JsonResponse
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from .models import UserModel
+from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_POST
+
+
 
 # In-memory OTP store with expiry tracking
 otp_store = {}
@@ -79,3 +85,26 @@ class LoginUserView(APIView):
 
         return Response({'user_id': user.user_id}, status=status.HTTP_200_OK)
 
+@csrf_exempt
+@require_POST
+def get_username_by_id(request):
+    try:
+        data = json.loads(request.body)
+        user_id = data.get("user_id")
+
+        if not user_id:
+            return JsonResponse({"error": "Missing user_id"}, status=400)
+
+        try:
+            user = UserModel.get(user_id)
+            return JsonResponse({
+                "user_id": user_id,
+                "username": UserModel.user_name  # ✅ corrected field
+            })
+        except UserModel.DoesNotExist:
+            return JsonResponse({"error": "User not found"}, status=404)
+
+    except json.JSONDecodeError:
+        return JsonResponse({"error": "Invalid JSON"}, status=400)
+    except Exception as e:
+        return JsonResponse({"error": str(e)}, status=500)
