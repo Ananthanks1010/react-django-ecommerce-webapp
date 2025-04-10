@@ -23,5 +23,6 @@ urlpatterns = [
     path('upload/',include('upload.urls')),
     path('imagerecog/',include('Image_app.urls')),
     path('user/',include('User.urls')),
-    path('Auth/',include('Auth.urls'))
+    path('Auth/',include('Auth.urls')),
+    path('cart/',include('Registers.urls')),
 ]
