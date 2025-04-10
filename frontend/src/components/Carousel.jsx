@@ -13,8 +13,7 @@ function Carousel() {
     <div className="max-w-md">
       <h1 className="mb-5 text-5xl font-bold">Hello there</h1>
       <p className="mb-5">
-        Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem
-        quasi. In deleniti eaque aut repudiandae et a id nisi.
+      Discover a wide selection of top-quality products, unbeatable deals, and a shopping experience designed with you in mind. Whether you're here to find something specific or just browsing, we’re here to help every step of the way.
       </p>
       <button className="btn btn-primary">Get Started</button>
     </div>

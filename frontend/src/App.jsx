@@ -1,26 +1,39 @@
 import React from 'react'
 import './App.css'
-import { BrowserRouter, Route, Router, Routes } from 'react-router-dom'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Homepage from './pages/Homepage'
 import ProductPage from './pages/ProductPage'
 import S3Image from './components/ImageViewer'
 import UploadPage from './pages/UploadPage'
 import PageProduct from './pages/PageProduct'
+import LoginAndSignup from './pages/LoginAndSignup'
+import CartPage from './pages/CartPage'
+import VerifyOTP from './pages/VerifyOTP'
+import ProductList from './pages/ProductList'
+import ImageSearchModal from './components/ImageSearchModal'
+import ModelViewer from './components/ModelView'
+import { AuthProvider } from './components/authcontext'
 
 const App = () => {
   return (
-    <BrowserRouter>
-     <div>
-       <Routes>
-        <Route path='/' element={<Homepage />} />
-        <Route path="/product/:productId" element={<ProductPage />} /> {/* Product page with ID */}
-        <Route path='/Image' element={<S3Image />} />
-        <Route path='/upload' element={<UploadPage />} />
-        <Route path='/page/:pro' element={<PageProduct />} />
-       </Routes>
-     </div>
-    </BrowserRouter>
+    <AuthProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path='/' element={<Homepage />} />
+          <Route path="/product/:productId" element={<ProductPage />} />
+          <Route path='/Image' element={<S3Image />} />
+          <Route path='/upload' element={<UploadPage />} />
+          <Route path='/page/:pro' element={<PageProduct />} />
+          <Route path='/login' element={<LoginAndSignup />} />
+          <Route path='/cart' element={<CartPage />} />
+          <Route path='/verifyotp' element={<VerifyOTP />} />
+          <Route path='/list' element={<ProductList />} />
+          <Route path='/ImageSearch' element={<ImageSearchModal />} />
+          <Route path='/model' element={<ModelViewer />} />
+        </Routes>
+      </BrowserRouter>
+    </AuthProvider>
   )
 }
 
-export default App
+export default App;

@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import NavBar from "../components/NavBar";
+import Footer from "../components/Footer";
 
 export default function ProductPage() {
   const { productId } = useParams(); // Get product ID from URL
@@ -30,6 +32,7 @@ export default function ProductPage() {
 
   return (
     <div>
+      < NavBar/>
       <div className="min-h-screen flex flex-col gap-4 p-4 bg-gray-200">
         <div className="w-full h-screen bg-white shadow-lg rounded-lg overflow-hidden flex flex-col">
           {/* Scrollable Product Images */}
@@ -45,9 +48,9 @@ export default function ProductPage() {
           </div>
   
           {/* Product Info Section - Split Layout */}
-          <div className="flex flex-col md:!flex-row items-start p-3">
+          <div className="flex min-h-[40dvh] flex-col md:!flex-row items-start p-3">
             {/* Product Details on Left */}
-            <div className="w-full md:w-1/2 items-start pt-4">
+            <div className="w-full h-1/2 md:w-1/2 items-start pt-4">
               <h2 className="text-2xl font-semibold text-gray-800">Product : {product?.product_name}</h2>
               <p className="text-gray-600 mt-2">Description : {product?.product_description}</p>
               <span className="text-1xl font-bold text-gray-900 mt-4 block">Price :  ${product?.product_price}</span>
@@ -59,9 +62,9 @@ export default function ProductPage() {
             </div>
             
             {/* Size Selector on Right */}
-            <div className="w-full md:w-1/2 items-center">
-              <h3 className="text-sm font-medium text-black">Size</h3>
-              <div className="mt-2 flex flex-wrap gap-2">
+            <div className="w-full md:w-1/2 items-center p-4 m-4">
+              <h3 className="text-lg font-medium text-black ">Size</h3>
+              <div className="mt-2 btn btn-lg bg-white border border-white flex flex-wrap gap-2">
                 {product?.product_sizes?.map((size, idx) => (
                   <button key={idx} className="px-3 py-1 border rounded text-black hover:bg-black hover:text-white">
                     {size}
@@ -72,6 +75,8 @@ export default function ProductPage() {
           </div>
         </div>
       </div>
+
+      < Footer/>
     </div>
   );
 }

@@ -49,16 +49,16 @@ function Homepage() {
 
   {/* divider*/}
         <div className="flex w-full flex-col">
-        <div className="divider"><h2 className="text-xl font-bold mt-8 text-white">On Sale</h2></div>
-  <div className="card bg-base-300 rounded-box grid h-10 place-items-center"></div>
+        <div className="divider p-4 m-2"><h2 className="text-2xl font-bold mt-8 text-grey-500">On Sale</h2></div> <br /> <hr />
+  
 </div>
 
-      <h1>HomePage</h1>
+    
     {/* Product card*/}
-      <ul className="flex flex-wrap justify-center gap-6 md:flex-nowrap md:justify-start">
+      <ul className="flex flex-wrap justify-center m-4 p-4 g-4 gap- md:flex-nowrap md:justify-start rounded-lg">
         {info.map((infos, index) => (
             <li key={infos.id || index}>
-                <div className="card bg-black w-96 shadow-sm ">
+                <div className="card bg-grey w-96 m-4 p-4 g-6 rounded-lg shadow-md border border-grey-600">
            <figure >
             <img
               src={infos.image_url}
@@ -83,14 +83,13 @@ function Homepage() {
     
     {/* Divider 2 */}
     <div className="flex w-full flex-col">
-  <div className="divider"><h2 className="text-xl font-bold mt-8 text-white">Featured Products</h2></div>
-  <div className="card bg-base-300 rounded-box grid h-10 place-items-center"></div>
+  <div className="divider p-4 m-2"><h2 className="text-2xl font-bold mt-8 text-grey-600">Featured Products</h2></div>
 </div>
     {/*is Featured slide */}
-<ul className="flex flex-wrap justify-center gap-6 md:flex-nowrap md:justify-start">
+<ul className="flex flex-wrap justify-center gap-6 md:flex-nowrap md:justify-start p-4 m-2">
         {isfeatured.map((infos, index) => (
             <li key={infos.id || index}>
-                <div className="card bg-black w-96 shadow-sm ">
+                <div className="card bg-grey w-96 shadow-sm ">
            <figure >
             <img
               src={infos.image_url}
