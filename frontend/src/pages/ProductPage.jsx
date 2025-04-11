@@ -18,7 +18,7 @@ export default function ProductPage() {
 
   useEffect(() => {
     axios
-      .get(`http://127.0.0.1:8000/Product/product/${productId}/`) // Replace with your actual API
+      .get(`${import.meta.env.VITE_API_URL}/Product/product/${productId}/`) // Replace with your actual API
       .then((response) => {
         console.log(response.data);
         setProduct(response.data);
@@ -39,7 +39,7 @@ export default function ProductPage() {
     }
 
     try {
-      const res = await axios.post("http://127.0.0.1:8000/cart/add/", {
+      const res = await axios.post("${import.meta.env.VITE_API_URL}/cart/add/", {
         user_id: user.user_id,
         product_id: productId,
       });

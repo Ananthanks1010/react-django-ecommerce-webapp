@@ -26,13 +26,13 @@ export default function Payment() {
     const fetchUserAndProducts = async () => {
       try {
         // ✅ Fetch username from DynamoDB via POST
-        const userResponse = await axios.post('http://127.0.0.1:8000/Auth/get-username/', {
+        const userResponse = await axios.post('${import.meta.env.VITE_API_URL}/Auth/get-username/', {
           user_id,
         });
         setUsername(userResponse.data.username);
 
         // ✅ Fetch product details
-        const productResponse = await axios.post('http://localhost:8000/Product/get-by-ids', {
+        const productResponse = await axios.post('${import.meta.env.VITE_API_URL}/Product/get-by-ids', {
           product_ids,
         });
         setProducts(productResponse.data.products);
@@ -54,7 +54,7 @@ export default function Payment() {
 
     if (paymentMethod === 'cod') {
       try {
-        const res = await axios.post('http://127.0.0.1:8000/cart/checkout/', {
+        const res = await axios.post('${import.meta.env.VITE_API_URL}/cart/checkout/', {
           user_id,
           product_ids,
           phone_number: phoneNumber

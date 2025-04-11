@@ -12,7 +12,7 @@ function Homepage() {
     const navigate = useNavigate();
 
     useEffect( () => {
-        axios.get("http://127.0.0.1:8000/Product/products/")
+        axios.get("${import.meta.env.VITE_API_URL}/Product/products/")
         .then(response => {
           console.log("User data :",response.data)
           const Slice = response.data.slice(0,6)
@@ -24,7 +24,7 @@ function Homepage() {
         },[]);
 
     useEffect( () => {
-          axios.get("http://127.0.0.1:8000/Product/featured/")
+          axios.get("${import.meta.env.VITE_API_URL}/Product/featured/")
           .then(response => {
             console.log("User data :",response.data)
             const featuredProducts = response.data.featured_products || [];

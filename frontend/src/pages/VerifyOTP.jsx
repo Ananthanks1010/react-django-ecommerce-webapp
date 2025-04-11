@@ -11,7 +11,7 @@ export default function VerifyOTP() {
 
   const handleVerify = async () => {
     try {
-      const res = await axios.post("http://localhost:8000/confirm/", {
+      const res = await axios.post("${import.meta.env.VITE_API_URL}/confirm/", {
         email,
         code,
       });

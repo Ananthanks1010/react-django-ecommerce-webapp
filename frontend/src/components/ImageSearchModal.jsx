@@ -32,7 +32,7 @@ const ImageSearchModal = () => {
 
       try {
         setIsUploading(true);
-        const response = await axios.post('http://127.0.0.1:8000/imagerecog/imagesearch/', {
+        const response = await axios.post('${import.meta.env.VITE_API_URL}/imagerecog/imagesearch/', {
           image_data: base64String,
         });
 
@@ -85,7 +85,7 @@ const ImageSearchModal = () => {
 
     try {
       setIsUploading(true);
-      const response = await axios.post('http://127.0.0.1:8000/imagerecog/imagesearch/', {
+      const response = await axios.post('${import.meta.env.VITE_API_URL}/imagerecog/imagesearch/', {
         image_data: base64String,
       });
 

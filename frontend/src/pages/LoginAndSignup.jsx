@@ -8,7 +8,7 @@ import { Input } from "../components/ui/input";
 import logo from "../assets/logo1.png";
 import { useAuth } from "../components/authcontext";
 
-const API_BASE_URL = "http://localhost:8000";
+const API_BASE_URL = "${import.meta.env.VITE_API_URL}";
 
 const LoginAndSignup = () => {
   const [isLogin, setIsLogin] = useState(true);

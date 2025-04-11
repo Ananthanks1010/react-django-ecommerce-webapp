@@ -135,7 +135,7 @@ export default function InteractiveCloth() {
   useEffect(() => {
     const fetchModel = async () => {
       try {
-        const res = await axios.post('http://127.0.0.1:8000/Product/get-model-url/', {
+        const res = await axios.post('${import.meta.env.VITE_API_URL}/Product/get-model-url/', {
           product_id: productId,
         });
         setModelUrl(res.data.model_url);

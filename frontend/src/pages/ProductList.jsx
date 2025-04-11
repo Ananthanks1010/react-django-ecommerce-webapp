@@ -18,7 +18,7 @@ const ProductList = () => {
       }
 
       try {
-        const response = await axios.post("http://localhost:8000/Product/get-by-ids", {
+        const response = await axios.post("${import.meta.env.VITE_API_URL}/Product/get-by-ids", {
           product_ids: productIds,
         });
 

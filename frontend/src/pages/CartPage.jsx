@@ -27,7 +27,7 @@ const CartPage = () => {
       }
 
       try {
-        const res = await axios.post("http://localhost:8000/cart/get/", {
+        const res = await axios.post("${import.meta.env.VITE_API_URL}/cart/get/", {
           user_id: userId,
         });
 
@@ -38,7 +38,7 @@ const CartPage = () => {
           productIds.map(async (id) => {
             try {
               const detailRes = await axios.get(
-                `http://localhost:8000/Product/product/${id}/`
+                `${import.meta.env.VITE_API_URL}/Product/product/${id}/`
               );
               const p = detailRes.data;
               const mappedItem = {
@@ -80,7 +80,7 @@ const CartPage = () => {
 
   const removeItem = async (id) => {
     try {
-      await axios.delete("http://localhost:8000/cart/remove/", {
+      await axios.delete("${import.meta.env.VITE_API_URL}/cart/remove/", {
         data: { user_id: userId, product_id: id },
       });
       setCartItems((items) => items.filter((item) => item.id !== id));

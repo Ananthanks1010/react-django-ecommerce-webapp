@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useAuth } from "./authcontext";
 
-const BACKEND_URL = "http://localhost:8000";
+const BACKEND_URL = "${import.meta.env.VITE_API_URL}";
 
 function NavBar() {
   const [isOpen, setIsOpen] = useState(false);

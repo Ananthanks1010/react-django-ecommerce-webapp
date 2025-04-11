@@ -30,7 +30,7 @@ const LoginAndSignup = () => {
           return;
         }
 
-        await axios.post("http://127.0.0.1:8000/user/register/", {
+        await axios.post("${import.meta.env.VITE_API_URL}/user/register/", {
           email,
           password,
         });
@@ -38,7 +38,7 @@ const LoginAndSignup = () => {
         navigate("/verifyotp", { state: { email } });
 
       } else {
-        const res = await axios.post("http://127.0.0.1:8000/user/login/", {
+        const res = await axios.post("${import.meta.env.VITE_API_URL}/user/login/", {
           email,
           password,
         });
